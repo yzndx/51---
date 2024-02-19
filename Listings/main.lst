@@ -1,0 +1,110 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              02/19/2024 12:28:15 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\MCU Keil\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\mai
+                    -n.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <reg51.h> 
+   2          
+   3          
+   4          /*注意信号线接1-0，1-1，1-2，1-3*/
+   5          sbit int1=P1^4;  
+   6          sbit int2=P1^5;
+   7          sbit int3=P1^6;
+   8          sbit int4=P1^7;
+   9          
+  10          char i;
+  11          
+  12          void stop()//停止
+  13          {
+  14   1        int1=0;    
+  15   1        int2=0;
+  16   1        int3=0;
+  17   1        int4=0; 
+  18   1      }
+  19          void back()//后退
+  20          {
+  21   1        int1=1;    
+  22   1        int2=0;
+  23   1        int3=1;
+  24   1        int4=0;
+  25   1      }
+  26          
+  27          void forward()//前进
+  28          {
+  29   1        int1=0;    
+  30   1        int2=1;
+  31   1        int3=0;
+  32   1        int4=1;    
+  33   1      }
+  34          
+  35          void right() //右转  
+  36          {
+  37   1        int1=0;    
+  38   1        int2=1;
+  39   1        int3=1;
+  40   1        int4=0;
+  41   1      }
+  42          
+  43          void left()//左转
+  44          {
+  45   1        int1=1;    
+  46   1        int2=0;
+  47   1        int3=0;
+  48   1        int4=1;
+  49   1      }
+  50          
+  51          void main()
+  52          {
+  53   1      TMOD = 0x20;
+  54   1      TH1 = 0x02;
+C51 COMPILER V9.60.0.0   MAIN                                                              02/19/2024 12:28:15 PAGE 2   
+
+  55   1      TL1 = 0x2A;
+  56   1      SCON = 0x50;
+  57   1      PCON = 0x00;
+  58   1      TR1 = 1;
+  59   1      ES = 1;
+  60   1      EA = 1;                            //开串口中断
+  61   1        while(1)
+  62   1        {
+  63   2           i=SBUF;//SBUF为单片机接收到的数据，单片机接收到的数据都存放在SBUF里；
+  64   2               RI=0;
+  65   2               switch(i)
+  66   2               {
+  67   3              case '1':       
+  68   3                forward();
+  69   3                  break;
+  70   3              case '2':       
+  71   3                back();
+  72   3                break;
+  73   3              case '3':       
+  74   3                  left();
+  75   3                break;
+  76   3            case '4':       
+  77   3                  right();
+  78   3                break;
+  79   3              case '5':       
+  80   3                stop();
+  81   3                break;
+  82   3          }
+  83   2        }
+  84   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    115    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
